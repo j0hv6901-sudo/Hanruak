@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Exam Syllabus | Hnaruak</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="header">
+    <h1 id="exam-title">Syllabus</h1>
+    <a href="index.html" class="back">← Home</a>
+  </div>
+  <div class="container">
+    <h2 class="section-title" id="exam-name"></h2>
+    <div class="category-grid" id="subject-list"></div>
+  </div>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const exam = urlParams.get('name');
+document.getElementById('exam-title').textContent = exam + ' Syllabus';
+document.getElementById('exam-name').textContent = exam + ' Subjects';
+
+const subjects = {
+  MPSC: ['English','Simple Arithmetics','Reasoning','Nursing Paper','Computer GK','Economics','History','Science','Mizo','Indian Polity','Geography'],
+  Railways: ['English','Quantitative Aptitude','General Intelligence & Reasoning','Economics','History','Science','Indian Polity','Geography'],
+  SSC: ['English','Quantitative Aptitude','General Intelligence & Reasoning','Economics','History','Science','Indian Polity','Geography'],
+  RBI: ['English','Quantitative Aptitude','General Intelligence & Reasoning','General Awareness','Economics','History','Science','Indian Polity','Geography'],
+  UPSC: ['English','Quantitative Aptitude','General Intelligence & Reasoning','General Studies','Economics','History','Science','Indian Polity','Geography'],
+  Army: ['English','Quantitative Aptitude','General Intelligence & Reasoning','General Studies','Economics','History','Science','Indian Polity','Geography'],
+  Banking: ['English','Quantitative Aptitude','General Intelligence & Reasoning','General Awareness','Economics','History','Science','Indian Polity','Geography']
+};
+
+let html = '';
+subjects[exam].forEach(sub => {
+  html += `<a href="subject.html?exam=${exam}&subject=${sub}" class="cat-btn">${sub}</a>`;
+});
+document.getElementById('subject-list').innerHTML = html;
+</script>
+</body>
+</html>

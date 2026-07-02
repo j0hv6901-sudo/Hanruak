@@ -1,0 +1,51 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "syllabus"
+    label: "Syllabus Topic"
+    folder: "_syllabus"
+    create: true
+    slug: "{{exam}}-{{subject}}-{{slug}}"
+    fields:
+      - { label: "Exam", name: "exam", widget: "select", options: ["MPSC", "Railways", "SSC", "RBI", "UPSC", "Army", "Banking"] }
+      - { label: "Subject", name: "subject", widget: "string" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "PDF File", name: "pdf_file", widget: "file", required: false }
+      - { label: "Word File", name: "word_file", widget: "file", required: false }
+      - { label: "Image", name: "image_file", widget: "image", required: false }
+      - { label: "Notes", name: "body", widget: "markdown", required: false }
+
+  - name: "jobs"
+    label: "Hnaruak Post"
+    folder: "_jobs"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Job Title", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "select", options: ["MPSC", "Railways", "SSC", "RBI", "UPSC", "Army", "Banking", "Others"] }
+      - { label: "Last Date", name: "last_date", widget: "string" }
+      - { label: "Post", name: "post", widget: "string" }
+      - { label: "Vacancy", name: "vacancy", widget: "string" }
+      - { label: "PDF", name: "pdf_file", widget: "file", required: false }
+      - { label: "Image", name: "image_file", widget: "image", required: false }
+      - { label: "Word", name: "word_file", widget: "file", required: false }
+      - { label: "Apply Link", name: "link", widget: "string", required: false }
+      - { label: "Details", name: "body", widget: "markdown", required: false }
+
+  - name: "ca"
+    label: "Current Affairs"
+    folder: "_ca"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "string" }
+      - { label: "Category", name: "category", widget: "select", options: ["National", "International", "Mizoram", "Sports"] }
+      - { label: "Image", name: "image_file", widget: "image", required: false }
+      - { label: "PDF", name: "pdf_file", widget: "file", required: false }
+      - { label: "Content", name: "body", widget: "markdown" }

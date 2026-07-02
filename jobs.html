@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hnaruak | Jobs</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="header"><h1>HNARUAK</h1><a href="index.html" class="back">← Home</a></div>
+  <div class="container">
+    <h2 class="section-title">Latest Jobs</h2>
+    <div id="job-list">Loading...</div>
+  </div>
+<script>
+async function loadJobs() {
+  try {
+    const res = await fetch('/.netlify/functions/get-content?type=jobs');
+    const jobs = await res.json();
+    let html = '';
+    jobs.forEach(job => {
+      html += `<div class="post">
+        <h3>${job.title}</h3>
+        <p class="date">Last Date: ${job.last_date} | Category: ${job.category}</p>
+        <p><strong>Post:</strong> ${job.post} | <strong>Vacancy:</strong> ${job.vacancy}</p>
+        ${job.image_file? `<img src="${job.image_file}" style="width:100%;max-width:500px;border-radius:8px;margin:15px 0;">` : ''}
+        <div>
+          ${job.pdf_file? `<a href="${job.pdf_file}" class="apply-btn" target="_blank">📄 PDF</a>` : ''}
+          ${job.word_file? `<a href="${job.word_file}" class="apply-btn" target="_blank" style="background:#2b579a;">📝 Word</a>` : ''}
+          ${job.link? `<a href="${job.link}" class="apply-btn" target="_blank" style="background:#28a745;">🔗 Apply</a>` : ''}
+        </div>
+        ${job.body? `<div style="margin-top:15px;padding-top:15px;border-top:1px solid #444;">${job.body}</div>` : ''}
+      </div>`;
+    });
+    document.getElementById('job-list').innerHTML = html || '<p>Hnaruak a awm rih lo.</p>';
+  } catch(e) { document.getElementById('job-list').innerHTML = 'Error loading'; }
+}
+loadJobs();
+</script>
+</body>
+</html>

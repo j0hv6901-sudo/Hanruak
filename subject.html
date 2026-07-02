@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Subject | Hnaruak</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="header">
+    <h1 id="page-title">Subject</h1>
+    <a href="javascript:history.back()" class="back">← Back</a>
+  </div>
+  <div class="container" id="content">Loading...</div>
+<script>
+const urlParams = new URLSearchParams(window.location.search);
+const exam = urlParams.get('exam');
+const subject = urlParams.get('subject');
+document.getElementById('page-title').textContent = `${exam} - ${subject}`;
+
+async function loadContent() {
+  try {
+    const res = await fetch(`/.netlify/functions/get-content?type=syllabus&exam=${exam}&subject=${subject}`);
+    const data = await res.json();
+    let html = '';
+    if(data.pdf_file) html += `<a href="${data.pdf_file}" class="apply-btn" target="_blank">📄 Download PDF</a>`;
+    if(data.word_file) html += `<a href="${data.word_file}" class="apply-btn" target="_blank" style="background:#2b579a;">📝 Download Word</a>`;
+    if(data.image_file) html += `<br><img src="${data.image_file}" style="width:100%;max-width:700px;border-radius:8px;margin:20px 0;">`;
+    html += `<div class="post" style="margin-top:20px;">${data.body || '<p>Topic upload a la ni lo.</p>'}</div>`;
+    document.getElementById('content').innerHTML = html;
+  } catch(e) {
+    document.getElementById('content').innerHTML = '<div class="post">Topic upload a la ni lo.</div>';
+  }
+}
+loadContent();
+</script>
+</body>
+</html>

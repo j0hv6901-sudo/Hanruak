@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Current Affairs | Hnaruak</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="header"><h1>CURRENT AFFAIRS</h1><a href="index.html" class="back">← Home</a></div>
+  <div class="container">
+    <h2 class="section-title">Latest Updates</h2>
+    <div id="ca-list">Loading...</div>
+  </div>
+<script>
+async function loadCA() {
+  try {
+    const res = await fetch('/.netlify/functions/get-content?type=ca');
+    const ca = await res.json();
+    let html = '';
+    ca.forEach(item => {
+      html += `<div class="post">
+        <h3>${item.title}</h3>
+        <p class="date">${item.date} | ${item.category}</p>
+        ${item.image_file? `<img src="${item.image_file}" style="width:100%;max-width:500px;border-radius:8px;margin:15px 0;">` : ''}
+        ${item.pdf_file? `<a href="${item.pdf_file}" class="apply-btn" target="_blank">📄 PDF</a>` : ''}
+        <div style="margin-top:15px;">${item.body}</div>
+      </div>`;
+    });
+    document.getElementById('ca-list').innerHTML = html || '<p>Update a awm rih lo.</p>';
+  } catch(e) { document.getElementById('ca-list').innerHTML = 'Error loading'; }
+}
+loadCA();
+</script>
+</body>
+</html>
